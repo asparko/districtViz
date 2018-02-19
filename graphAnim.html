@@ -1,0 +1,51 @@
+<!doctype html> 
+<html lang="en"> 
+<head>
+
+</head>
+
+<style>
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: Helvetica, Verdana, Geneva, Arial, sans-serif;
+}
+
+svg {
+  width: 75%;
+  height: 75%;
+  display: block;
+  margin: auto;
+}
+
+
+</style>
+
+<body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="js/graphData.js"></script>
+	<script>
+	var width = self.frameElement ? 960 : innerWidth,
+    	height = self.frameElement ? 500 : innerHeight;
+
+	var data = d3.range(20).map(function() { return [Math.random() * width, Math.random() * height]; });
+
+	var color = d3.scale.category10();
+
+	</script>
+
+	<div style="text-align:center; height:100%;">
+		<svg id="graph"></svg>
+		<p id="play">PLAY</p>
+		<p id="pause">PAUSE</p>
+
+	</div>
+</body>
+
+<script type="text/javascript" src="js/process.js"></script>
+
+</html>

@@ -1,0 +1,715 @@
+<!doctype html> 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async
+src="https://www.googletagmanager.com/gtag/js?id=UA-112775142-2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-112775142-2');
+</script>
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8">         
+        <meta name="description" content="Gerrymandering Project, Data+ Program, Duke">         
+        <meta name="keywords" content="Gerrymandering, Duke Data+ Program, Duke University, Markov Chain Monte Carlo, iiD">         
+        <meta name="author" content="Sachet Bangia">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">         
+        <!-- SITE TITLE -->         
+        <title>Quantifying Gerrymandering : Data+ 2015 @ Duke</title>
+        <!-- =========================
+      FAV AND TOUCH ICONS  
+============================== -->         
+        <link rel="icon" href="images/favicon.ico">         
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">         
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">         
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">         
+        <!-- =========================
+     STYLESHEETS   
+============================== -->         
+        <!-- BOOTSTRAP -->         
+        <link rel="stylesheet" href="css/bootstrap.min.css">         
+        <!-- FONT ICONS -->         
+        <!-- IonIcons -->         
+        <link rel="stylesheet" href="assets/ionicons/css/ionicons.css">         
+        <!-- Font Awesome 
+<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+-->         
+        <!-- Elegant Icons -->         
+        <link rel="stylesheet" href="assets/elegant-icons/style.css">         
+        <!--[if lte IE 7]><script src="assets/elegant-icons/lte-ie7.js"></script><![endif]-->         
+        <!-- CAROUSEL AND LIGHTBOX -->         
+        <link rel="stylesheet" href="css/owl.theme.css">         
+        <link rel="stylesheet" href="css/owl.carousel.css">         
+        <link rel="stylesheet" href="css/nivo-lightbox.css">         
+        <link rel="stylesheet" href="css/nivo_themes/default/default.css">         
+        <!-- COLORS -->         
+        <link rel="stylesheet" href="css/colors/blue.css">         
+        <!-- DEFAULT COLOR/ CURRENTLY USING -->         
+        <!-- <link rel="stylesheet" href="css/colors/red.css"> -->         
+        <!-- <link rel="stylesheet" href="css/colors/green.css"> -->         
+        <!-- <link rel="stylesheet" href="css/colors/purple.css"> -->         
+        <!-- <link rel="stylesheet" href="css/colors/orange.css"> -->         
+        <!-- <link rel="stylesheet" href="css/colors/blue-munsell.css"> -->         
+        <!-- <link rel="stylesheet" href="css/colors/slate.css"> -->         
+        <!-- <link rel="stylesheet" href="css/colors/yellow.css"> -->         
+        <!-- CUSTOM STYLESHEETS -->         
+        <link rel="stylesheet" href="css/styles.css">         
+        <!-- RESPONSIVE FIXES -->         
+        <link rel="stylesheet" href="css/responsive.css">         
+        <!--[if lt IE 9]>
+			<script src="js/html5shiv.js"></script>
+			<script src="js/respond.min.js"></script>
+<![endif]-->         
+        <!-- ****************
+      After neccessary customization/modification, Please minify HTML/CSS according to http://browserdiet.com/en/ for better performance
+     **************** -->         
+    <script type="text/javascript" src="https://fds.duke.edu/db/aas/math/GAjsCode.js"></script>
+</head>     
+    <body> 
+        <!-- =========================
+     PRE LOADER       
+============================== -->         
+        <div class="preloader"> 
+            <div class="status">&nbsp;</div>             
+        </div>         
+        <!-- =========================
+     HEADER   
+============================== -->         
+        <header id="home"> 
+            <!-- COLOR OVER IMAGE -->             
+            <div class="color-overlay"> 
+                <div class="navigation-header"> 
+                    <!-- STICKY NAVIGATION -->                     
+                    <div class="navbar navbar-inverse bs-docs-nav navbar-fixed-top sticky-navigation"> 
+                        <div class="container"> 
+                            <div class="navbar-header"> 
+                                <!-- LOGO ON STICKY NAV BAR -->                                 
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#landx-navigation"> 
+                                    <span class="sr-only">Toggle navigation</span> 
+                                    <span class="icon-bar"></span> 
+                                    <span class="icon-bar"></span> 
+                                    <span class="icon-bar"></span> 
+                                </button>                                 
+                                <a class="navbar-brand" href="http://bigdata.duke.edu/data">
+                                    <img src="images/data+.png" alt="">
+                                    <img src="images/iid.png" alt="">
+                                    <img src="images/duke.gif" alt="">
+                                </a>                                 
+                            </div>                             
+                            <!-- NAVIGATION LINKS -->                             
+                            <div class="navbar-collapse collapse" id="landx-navigation"> 
+                                <ul class="nav navbar-nav navbar-right main-navigation"> 
+                                    <li>
+                                        <a href="#home">Top</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section1">About</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section3">Process</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section4">Terms</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section5">Data</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section6">Results</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section7">Team</a>
+                                    </li>                                     
+                                    <li>
+                                        <a href="#section8">Contact</a>
+                                    </li>                                     
+                                </ul>                                 
+                            </div>                             
+                        </div>                         
+                        <!-- /END CONTAINER -->                         
+                    </div>                     
+                    <!-- /END STICKY NAVIGATION -->                     
+                    <!-- ONLY LOGO ON HEADER -->                     
+                    <div class="navbar non-sticky"> 
+                        <div class="container"> 
+                            <div class="navbar-header"> 
+</div>                             
+                            <ul class="nav navbar-nav navbar-right social-navigation hidden-xs"> 
+                                <li>
+                                    <a href="#"></a>
+                                </li>                                 
+                                <li>
+                                    <a href="#"></a>
+                                </li>                                 
+                                <li>
+                                    <a href="#"></a>
+                                </li>                                 
+                            </ul>                             
+                        </div>                         
+                        <!-- /END CONTAINER -->                         
+                    </div>                     
+                    <!-- /END ONLY LOGO ON HEADER -->                     
+                </div>                 
+                <!-- HEADING, FEATURES AND REGISTRATION FORM CONTAINER -->                 
+                <div class="container"> 
+                    <div class="row"> 
+                        <!-- LEFT - HEADING AND TEXTS -->                         
+                        <div class="intro-section"> 
+                            <h1 class="intro"></h1>
+                            <h1 style="display: block;"></h1>
+                            <h5 style="display: block;" class="blue">QUANTIFYING</h5>
+                            <h1 style="display: block;">gerrymandering</h1>
+                            <h1 class="intro" style="display: block;"> </h1> 
+                            <div class="row">
+</div>
+                        </div>                         
+                    </div>                     
+                    <!-- SUBSCRIBE FORM -->                     
+                    <div class="row"> 
+                        <div class="col-md-6 col-md-offset-3"> 
+                            <div class="sf-container"> 
+                                <p class="white size50">
+ Data+ 2015   @ Duke University<br> For general information see main site <a
+			    href="https://sites.duke.edu/quantifyinggerrymandering/">Quantifying
+			    Gerrymandering</a> </p>
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                </div>                 
+                <!-- /END HEADING, FEATURES AND REGISTRATION FORM CONTAINER -->                 
+            </div>             
+        </header>         
+        <!-- =========================
+     SECTION 1   
+============================== -->         
+        <section class="section1 bgcolor-2" id="section1"> 
+            <div class="container"> 
+                <div class="row"> 
+                    <div class="col-md-6"> 
+                        <!-- SCREENSHOT -->                         
+                        <div class="side-screenshot centered"> 
+                            <img src="images/ssri.jpg" alt="Feature" class="img-responsive">                             
+                        </div>
+                    </div>                     
+                    <div class="col-md-6"> 
+                        <!-- DETAILS WITH LIST -->                         
+                        <div class="brief text-left"> 
+                            <!-- HEADING -->                             
+                            <h2>About</h2> 
+                            <div class="colored-line pull-left"> 
+</div>                             
+                            <!-- TEXT -->                             
+                            <p> 
+    As a part of the <a href="http://bigdata.duke.edu/data">Data+
+program</a> at the <a href="http://bigdata.duke.edu">Information
+Initiative at Duke</a> during the summer of 2015, we devised a
+diagnostic tool to quantify the effect of gerrymandering on
+congressional elections across a handful of states. <br><br>Using a
+Markov Chain Monte Carlo method (Metropolis-Hastings algorithm), we
+produce possible districtings that take into account the following:
+population division among districts; compactness; division of counties
+and the percentage of minority voters. We tally the votes for these
+sample districtings and compare the outcomes and competitiveness of
+these fictional congressional districts with those from the actual
+districts.<br><br>This project is an extension to an <a
+href="http://arxiv.org/abs/1410.8796">earlier study</a> by Christy
+Vaughn and Jonathan Mattingly on gerrymandering in North Carolina.<br><br> The
+text on this site was largely written by Sachet Bangia about the work
+perfomed by the 2015 Data+ team.
+<br><br>
+The work on this project continued with a second Data+ team in the
+                            summer of 2016. More on that team and the
+                            subsequent work with the Beyond
+                            Gerrymandering project can be found in the
+                            main <a href="https://sites.duke.edu/quantifyinggerrymandering/">Quantifying Gerrymandering</a> website.</p> 
+                            <!-- FEATURE LIST -->                             
+                        </div>                         
+                    </div>                     
+                    <!-- /END DETAILS WITH LIST -->                     
+                </div>                 
+                <!-- END ROW -->                 
+            </div>             
+            <!-- END CONTAINER -->             
+        </section>         
+        <!-- =========================
+     SECTION 2   
+============================== -->         
+        <section class="section2 bgcolor-" id="section2"> 
+            <div class="container"> 
+                <div class="row">
+                    <div class="row">
+                        <h2>Project Overview</h2>
+                        <div class="colored-line"> 
+</div>
+                    </div>                     
+                    <div class="col-md-10 col-md-offset-1"> 
+                        <!-- DETAILS WITH LIST -->                         
+                        <div class="brief text-left"> 
+                            <!-- HEADING -->                             
+                            <!-- TEXT -->                             
+                            <p> 
+					After every decennial census, states are required to redraw districts so that each has roughly the same number of people, to meet the "one person, one vote" principle evoked in the Supreme Court ruling on Reynolds v. Sims (1964). This redistricting process occurs for both state legislative and congressional districts, and is often highly contentious. In several states, it falls under the purview of the state legislature. When the legislature is controlled by one party, districts are often drawn to favor its interests, a practice known as gerrymandering. To better understand how politically motivated redrawing of districts can lead to lopsided outcomes, see <a href="http://www.washingtonpost.com/blogs/wonkblog/wp/2015/03/01/this-is-the-best-explanation-of-gerrymandering-you-will-ever-see/">this article</a> in the Washington Post. Justin Levitt's webpage, <a href="http://redistricting.lls.edu"> All About Redistricting</a>, is a fantastic resource for information on the redistricting process across the United States, and has greatly informed this project.<br><br>In the 2012 congressional elections, the first that took place in the new districts drawn after the 2010 Census, Democrats won the national popular vote 48.8% to 47.6%, but only won 201 (44.9%) seats in the US House to Republicans' 234 (51.7%). This disparity has been attributed to gerrymandering. But a naive comparison of the share of popular vote to the share of seats in the House is probably not enough to establish that there is a legitimate inconsistency between the will of the people and the observed outcome. Since Democrats tend to be concentrated in dense urban areas, any district that is largely urban will naturally lean more Democratic than the national average. This means that even when Democrats win 50% of the popular vote, they should not expect to win 50% of districts, as many races would be won with heavy Democrat majorities. This form of "unintentional" gerrymandering has been shown to be a factor in a study by Jowei Chen and Jonathan Rodden (Unintentional Gerrymandering: Political Geography and Electoral Bias in Legislatures, 2013). <br><br>To determine if the observed electoral outcome is influenced by partisan forces, we compare it to the outcomes of other possible districtings. Our process, described in detail in the <a href="#section3">next section</a>, takes the current districts as a starting point to produce several samples of districts that are about as good as the current one. These samples aim to be about as good across four measures: division of population among districts, compactness of districts, the number of the state's counties that are split between districts, and the share of the voting age population of each minority within the districts (for the purpose of majority-minority districts). Each of these factors is quantified as an "energy". The rationale behind selecting these factors and the energy calculations is explained within the <a href="#section4">terms section</a>. It is important to note that this process does not aim to alter districts to make them necessarily better than the current ones, but to draw sample districts which are comparable to the current districting with respect to the four measures. This allows for a comparison between the outcomes of the samples and the current districts.<br><br>
+    For each sample, we use actual election data from different years and offices to predict how each congressional race would have turned out. So when we use the 2012 Presidential election, we assume that anyone in our fictional district who voted for Obama would vote for the Democrat, and anyone who voted for Romney would vote for the Republican. The obvious assumption made here is that people vote along party lines and not for candidates. It is certainly possible to find several examples where this is not the case, especially among the longest-serving and best-known members of the House of Representatives. In reality, there is no good way to accurately predict the outcomes of the races in our fictional districts. But this fact is not particularly important. The point of predicting outcomes of the sample districtings is to see if they are meaningfully different from the outcome of the actual districts (using the same election data). It is not the absolute values that we care about, rather the degree to which the observed outcome is different from what would be expected according to our samples. <br><br> We use these simulated runs to answer a few interesting questions. First, we plot the distribution of the number of districts won by Democrats in our samples (we could have chosen to do this for Republicans instead, which would convey the same information). This allows us to assess if the actual number of districts won by Democrats is substantially different. Then to dig deeper, we look into the competitiveness of each race. This is relevant as gerrymandering may take place to make districts less competitive by packing Democrats and Republicans into separate districts, without changing the outcome of the race. Lack of competitiveness in districts can lead to polarization in the legislature and affect a representative's willingness to reach across the aisle. Finally, for North Carolina and Maryland, we produce samples with and without taking into account the need for majority-minority districts. This allows us to discern the effect of the Voting Rights Act's protection of minorities on the outcomes of elections.<br><br>Currently, we have studied the effect of gerrymandering in congressional races. The results are summarized <a href="#rSum">below</a>. We hope to extend this study to state legislative districts in the future. </p> 
+                            <!-- FEATURE LIST -->
+                        </div>                         
+                    </div>                     
+                    <div class="col-md-6"> 
+                        <!-- SCREENSHOT -->                         
+                        <div class="side-screenshot2 pull-right"> 
+</div>                         
+                    </div>                     
+                </div>                 
+                <!-- END ROW -->                 
+            </div>             
+            <!-- END CONTAINER -->             
+        </section>         
+        <!-- =========================
+     SECTION 3   
+============================== -->         
+        <section class="section3 bgcolor-2" id="section3"> 
+            <div class="container">
+                <div class="container"> 
+                    <!-- SECTION HEADING -->                     
+                    <h2>Process</h2> 
+                    <div class="colored-line"> 
+</div>
+                    <div class="sub-heading remTopMarg size30" id="p1">1</div>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <svg width="700" height="400" id="process"></svg>
+                            <p id="p2" class="blue size12">(click image to continue)</p> 
+                            <span id="back" class="arrow_carrot-2left_alt2 blue"></span> 
+                        </div>
+                        <!-- SCREENSHOTS -->                         
+                        <!-- /END SCREENSHOTS -->                         
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="brief text-left"> 
+                                <p class="centered" id="p3">We start with a graph of a US state, where each node (circle) is plotted at the center of a Voting Tabulation District (VTD). An edge between two nodes signifies that the VTDs are physically next to each other, i.e. they share a boundary. The graph above is Iowa by county, not VTD (for a cleaner visual). <br><br> Each state is made up of several VTDs, from a few hundred to several thousand. VTD is US Census terminology for what states like to call election precincts or wards. It is the smallest geographical unit for which election data is available.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SECTION HEADING -->                     
+                </div>                 
+                <!-- /END CONTAINER -->                 
+        </section>         
+        <!-- =========================
+     SECTION 4   
+============================== -->         
+        <section class="section4 bgcolor-" id="section4"> 
+            <div class="container">
+                <h2>Terminology</h2>
+                <div class="colored-line"> 
+</div>
+                <div class="features"> 
+                    <!-- FEATURES ROW 1 -->                     
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2"> 
+                            <div class="feature"> 
+                                <div class="icon"> 
+                                    <span class="glyphicon glyphicon-fire"></span> 
+                                </div>                                 
+                                <h4>Energy</h4> 
+                                <div class="brief text-left"> 
+                                    <p> 
+						To quantify each of the four factors we want to take into consideration when creating samples of districtings, we define them as energies. Each energy function is specified such that a lower energy is better. </p> 
+                                </div>
+                            </div>                             
+                        </div>                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                        <div class="col-md-8 col-md-offset-2"> 
+                            <div class="feature"> 
+                                <div class="icon"> 
+                                    <span class="icon_group"></span> 
+                                </div>                                 
+                                <h4>Population Energy</h4> 
+                                <div class="brief text-left"> 
+                                    <p> 
+						This energy is defined to measure the division of population among districts. Congressional districts are required to have population as close to the ideal population as practicable, where ideal is defined as the state's population divided by the number of districts in the state. <br><br>We defined the population energy as the sum of the squares of the differences between the ideal population and the population of each of the state's districts. North Carolina's 9.5 million people would be ideally divvied into 13 districts of about 730,000 people each. Population energy for NC is calculated by finding the difference between the actual population in each district and this ideal, and summing up the squares of these differences.</p> 
+                                </div>
+                            </div>                             
+                        </div>
+                        <div class="col-md-8 col-md-offset-2"> 
+                            <div class="feature"> 
+                                <div class="icon"> 
+                                    <span class="arrow_condense"></span> 
+                                </div>                                 
+                                <h4>Compactness Energy</h4> 
+                                <div class="brief text-left"> 
+                                    <p> There is no federal requirement for compact districts, nevertheless <a href="http://redistricting.lls.edu/where-tablefed.php">several states</a> consider it as a factor in the redistricting process. Since compactness is a visual measure of how well districted a state is, we take it into account even for states that do not require districts to be compact. This ensures that our samples have districts that are about as compact as the original. <br><br> We defined the compactness energy as the sum of the perimeters squared divided by areas of each district in the state. A circle has the smallest possible ratio of perimeter to area. Since lower energies indicate a better districting, a district with many tendrils fares poorly on this measure compared to a district with neat boundaries.</p> 
+                                </div>
+                            </div>                             
+                        </div>                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                    </div>
+                    <div class="row"> 
+                        <!-- SINGLE FEATURE BOX -->                         
+                        <div class="col-md-8 col-md-offset-2"> 
+                            <div class="feature"> 
+                                <div class="icon"> 
+                                    <span class="icon_grid-2x2"></span> 
+                                </div>                                 
+                                <h4>Counties-Split Energy</h4> 
+                                <div class="brief text-left"> 
+                                    <p> 19 states require that the redistricting process respect existing political boundaries, such as those of counties and cities, to not partition them into different congressional districts unless necessary to meet the constitutional requirement of equal population. In practice, even states that do not have an explicit requirement to follow county lines tend to keep a large fraction of the counties whole. Specifying an energy that minimizes split counties ensures that our samples split a similar number of counties as the original districting. <br><br>The county energy is defined in a two-part manner. We start with a count of the counties that do not fully belong to one congressional district. Then for each of these split counties, we find the largest chunk that is in one district as a fraction of the entire county. To give the county energy, we subtract the average size of the largest chunk in the split counties from the number of split counties. So if there were two split counties, with each evenly split between two congressional districts, then the average size of the largest chunk is 0.5, which is subtracted from 2 to give an energy of 1.5. If instead 5 of a state's counties were split, with an average largest chunk size of 0.30, then the energy value will be 4.7. <br><br> The Counties-split energy is designed such that having fewer counties split is strictly better, and when the same number of counties are split, the district plan that keeps a larger fraction of the split counties in one district is better.</p>
+                                </div>
+                            </div>                             
+                        </div>                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                    </div>                     
+                    <!-- FEATURES ROW 2 -->                     
+                    <div class="row"> 
+                        <!-- SINGLE FEATURE BOX -->                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                        <div class="col-md-8 col-md-offset-2"> 
+                            <div class="feature"> 
+                                <div class="icon"> 
+                                    <span class="icon_balance"></span> 
+                                </div>                                 
+                                <h4>Majority-Minority Energy</h4> 
+                                <div class="brief text-left"> 
+                                    <p> The Voting Rights Act prohibits districting plans that dilute minority vote by making minorities incapable of electing representatives of their choice. In states with significant minority populations, majority-minority districts are often drawn to avoid violating the VRA. A majority-minority district is one where a racial or ethnic minority forms the majority of the voting age population. Thus we defined a majority-minority energy to ensure that our samples are not worse for minorities than the current districts. <br><br>
+    What constitutes to a minority being able to elect a representative of its choice is not clearly delineated. When the minority forms greater than half of the voting age population, it can certainly elect its representative, assuming it votes as a bloc. A minority would probably be able to do so even when it forms, say, 40% of a district's population. It may continue to have significant influence on the outcome of the race at even lower percentages. Thus we decided to design an energy that not only maintains true majority-minority districts, but also ones that have a significant minority population. <br><br>
+    To define what "significant" is, we chose to use the current districts as the baseline. We specify a threshold (that we aim to meet) for the top <i>M</i> districts with the largest voting age populations of each minority in the state. This threshold is set to the current fraction of the minority in the district if the minority forms less than half of the district's voting age population. For districts where the minority forms greater than half the voting age population, we set the threshold to 0.5, thus we are assuming that having any more than half of the district be of a certain minority does not enhance the minority's ability to elect a representative of its choice. In producing our samples, we attempt to keep the top <i>M</i> districts for each minority above these thresholds. <br><br> 
+    For instance, if <i>M</i> were set to 8 for Hispanics in Texas, all the thresholds would be set to 0.5, as the 8 districts with the largest Hispanic populations are more than 50% Hispanic each. The samples produced by our process will then maintain 8 districts that have at least 50% Hispanic voting age population. Such thresholds will be set and maintained in our samples for every relevant minority in each state.<br><br>
+    To choose <i>M</i>, we look at the top minority fraction of the voting age population in each district, and pick a <i>M</i> before there is a dramatic drop. To illustrate, in New York we set <i>M</i> to 4 for Hispanics as the fourth largest Hispanic district is 41% Hispanic, and the fifth largest is at only 21%. Similarly, <i>M</i> is set to 1 for Asians in New York (the two largest Asian districts are 39% and 21% Asian). M is chosen in this admittedly arbitrary manner only because systematic approaches often failed to either capture all the seemingly relevant districts, or went much too far. We have reported these percentages and the <i>M</i>'s for each state where majority-minority districts are relevant. <br><br>
+	To calculate the energy's value, we simply sum up the differences between the threshold and the minority fraction for all <i>M</i> districts of each relevant minority in the state that are below their thresholds. This means that the energy starts at zero for the current districts, and can never go below zero. </p> 
+                                </div>
+                            </div>
+                            <div class="brief text-left"> 
+                                <p class="blue"> 
+NOTE: Our samples aim to be "about as good" across these measures to the extent practicable. In some states, the population is divided evenly among districts down to the tens of people. This is achieved by splitting some VTDs between districts, working with census blocks instead, which is a much smaller unit than election precincts. Thus it would probably not be possible to divide the population as evenly even if that were the only thing our Markov-chain cared about. For most states, the samples produced have an average standard deviation (of population between districts) of less than 0.1%. In the most egregious samples, the difference between the least and the most populated districts is about 1%.
+               The samples tend to have somewhat better compactness energy and split slightly fewer counties on average than the actual districts, only because it is difficult to calibrate a chain very precisely. Nearly all of the samples produced are just as good on the majority-minority measure, and the very few that have a district below its threshold fall short to the magnitude of 0.1%.</p> 
+                            </div>
+                        </div>                         
+                        <!-- SINGLE FEATURE BOX -->                         
+                    </div>                     
+                </div>                 
+                <!-- SECTION HEADING -->                 
+                <!-- /END ALL PACKAGE -->                 
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>         
+        <!-- =========================
+     SECTION 5   
+============================== -->         
+        <section class="section5 bgcolor-2" id="section5"> 
+            <div class="container"> 
+                <!-- SECTION HEADING -->                 
+                <h2>Data</h2> 
+                <div class="colored-line"> 
+</div>                 
+                <div class="row"> 
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="size12">Sources: Shapefiles and precinct-level election data from <a href="http://projects.iq.harvard.edu/eda/pages/about">Harvard Election Data Archive</a> (Harvard Dataverse), <a href="https://www.census.gov/geo/maps-data/data/tiger-line.html">US Census Tigerline</a> and several state redistricting websites. Population data from Harvard Dataverse and <a href="http://www.nhgis.org">National Historical Geographic Information System</a> (NHGIS) at the University of Minnesota. </p> 
+                    </div>                     
+                </div>                 
+                <!-- FEATURES IN VIDEO SECTION -->                 
+                <div class="row video-features"> 
+                    <div class="col-md-10 col-md-offset-1 leftAlign"> 
+                        <p>Our choices of states and election years were largely dictated by the data available. A surprisingly large number of states do not provide data at the election precinct level on a state-wide database. To gather this information, one must contact each county clerk individually. Another complication was introduced for states that do not have a one-to-one relationship between voting tabulation districts (VTDs) and election precincts. Geospatial and population data is available for VTDs through the Census, but election results are collected in each state by election precincts. Thus some form of consolodation is needed to have data in a form that we could work with. Some states make consolodated data available on their redistricting websites. Thankfully, the Harvard Dataverse had compiled and consolodated election data for several states into VTDs, which allowed us to run a good number of states. For Maryland, we consolodated about 30 differences between the 2012 election precincts to 2010 VTDs shapefile using PDFs of the precinct maps from county websites. <br><br>
+Originally, we intended to use 2012 election data for all states, since that was the first election in the new districts. Given the constraints, we ran the years that were available on Harvard's database, most often 2008 and 2010. Keeping in mind that the 2008 and 2010 election data is what was available at the time of redistricting, one way of interpreting results from these years is to view them as the expected result by those drawing the districts. We did not use data for the House election years for the states with races that did not have both a Democrat and a Republican running. </p>
+                    </div>                     
+                </div>                 
+                <!-- /END FEATURES IN VIDEO SECTION -->                 
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>
+        <section class="section6 bgcolor-" id="section6"> 
+            <div class="container"> 
+                <!-- SECTION HEADING -->                 
+                <h2>Results</h2> 
+                <div class="colored-line"> 
+</div>                 
+                <div class="sub-heading">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <h3><a href="#rOver">Overview</a></h3> 
+                        </div>
+                        <div class="col-xs-4">
+                            <h3><a href="#rState">By State</a></h3> 
+                        </div>
+                        <div class="col-xs-4">
+                            <h3><a href="#rSum">Summary</a></h3> 
+                        </div>
+                    </div>                     
+                </div>                 
+                <!-- VIDEO -->                 
+                <div class="row" style="display: block;"> 
+</div>
+                <div class="row"> 
+                    <div class="col-md-10 col-md-offset-1"> 
+                        <div class="video-container"> 
+                            <!--
+				<div class="video">
+					
+					<iframe src="//player.vimeo.com/video/88902745?byline=0&amp;portrait=0&amp;color=ffffff" width="600" height="338" frameborder="0" allowfullscreen>
+					</iframe> 
+				</div>
+				-->                             
+                        </div>                         
+                    </div>                     
+                </div>                 
+                <!-- FEATURES IN VIDEO SECTION -->                 
+                <!-- /END FEATURES IN VIDEO SECTION -->
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>         
+        <!-- =========================
+     SECTION 6   
+============================== -->         
+        <section class="section6 bgcolor-2" id="rOver"> 
+            <div class="container"> 
+                <!-- SECTION HEADING -->                 
+                <h2></h2>
+                <h2>Overview</h2> 
+                <div class="colored-line"> 
+</div>                 
+                <div class="sub-heading"> 
+                    Understanding the Results
+</div>                 
+                <!-- SCREENSHOTS -->                 
+                <div class="row screenshots" style="display: block;">
+                    <div class="col-md-5 brief col-md-offset-1 text-left" style="display: block;">
+                        <p>We've reported our results using two illustrations. The first is a frequency plot of the number of districts won by Democrats in our samples. Here, the plot indicates that in all 500 samples, Democrats won 2 districts in the state. <br><br>
+We avoid using these frequency plots to make strong probabilistic statements as they depend entirely on the districts that are potentially competitive. The distributions of those districts are obviously measured with some error, and even small differences can result in dramatically different frequency plots. We only included them when using data from House elections; they are otherwise meaningless as statewide elections tend to lean more towards one party.</p> 
+                    </div>
+                    <div class="col-md-5" style="display: block;"> 
+                        <iframe width="308" height="384" src="chart/home_bar.htm" frameborder="0" allowfullscreen> data-pg-id="39990"></iframe>                         
+                    </div>                     
+                </div>
+                <div class="row screenshots" style="display: block;">
+                    <div class="col-md-5 brief col-md-offset-1 text-left" style="display: block;"> 
+                        <iframe width="700" height="500" src="chart/home_box.htm" frameborder="0" allowfullscreen> data-pg-id="39990"></iframe>                         
+                    </div>
+                    <div class="col-md-5 text-left" style="display: block;">
+                        <p>The second illustration, included in all cases, shows a breakdown of victory margins in each district.<br><br>
+    On the y-axis, we have the victory margins, measured as the difference between the fraction of vote that went to the Democrat versus the Republican. Thus a margin of less than zero indicates a Republican victory, and a positive margin a Democrat one. The black circles represent the victory margins under the current districts in the state, and the blue box plot shows the distribution of victory margins obtained from our samples (hover over box plot for detail). If a district's box plot spans across the y=0 line, it can be described as potentially competitive.<br><br> 
+The numbers on the x-axis do not represent a specific district, rather the Xth most Republican district. That is to say that at x = 1, the black circle represents the margin for the most Republican district in the original plan (or conversely the least Democratic), and the box plot shows the distribution of victory margins for the most Republican district in each of our samples. Analyzing the results in this manner makes sense as making one district more Republican would mean that another is less so, thus a ranked comparison is more meaningful than comparing the original district 1 to whatever form it evolves to within our samples. </p> 
+                    </div>
+                    <div class="col-md-10 col-md-offset-1 text-left" style="display: block;">
+                        <p><br>Without imposing strong assumptions on the distributions of victory margins, it is difficult to reliably tell whether the observed victory margins are substantially odd in light of our samples. There is no good reason to believe that victory margins are drawn from a particular distribution. So instead of calculating the statistical significance of the differences between our samples and the actual districts, we limit ourselves to comparisons that appear to involve unmistakably significant differences, such as when the actual victory margin lies outside the range of margins observed in our samples, or when a group of key districts follows a pattern.<br><br>  Additionally, when using election data that is not from US House races, it is harder to interpret the results. Statewide elections often have very different outcomes than the amalgamation of all House races within a state; they usually lean more strongly towards one party. In order to make sense of differences in the actual victory margins and those from our samples, we need to be able to tell whether the actual district is more or less competitive than the samples. Thus it is essential to establish which districts would be competitive in House races. Using the terminology above, we need to figure out where the "true" y=0 line lies. <br><br>In order to do so, we operate under the assumption that any difference between the statewide race and the state's House races is uniformly distributed among all districts, i.e. every congressional district is more or less Republican by the same amount. This assumption is not wholly unfounded, and allows us to work with the available data without introducing too much complexity.<br><br>An example will help make this clearer. Suppose that Republicans won a state's Senate race with a margin of 10%, but tied with Democrats in the popular vote for House races within that state. Because we assume that this difference is uniformly distributed, we would expect that any district in the state that was won by the Republican Senator-elect by a margin of 10% would have a victory margin of 0% in the House race. That is to say, we would expect the district to be competitive. Hence, we can arrive at a pretty good guess for what districts will be competitive in a House race by comparing statewide popular vote for the House to the outcome of the statewide election, and uniformly distributing the difference.  </p> 
+                    </div>                     
+                </div>                 
+                <!-- /END SCREENSHOTS -->
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>
+        <section class="section6 bgcolor-" id="rState"> 
+            <div class="container"> 
+                <!-- SECTION HEADING -->                 
+                <h2><h2>By State</h2></h2> 
+                <div class="colored-line"> 
+</div>                 
+                <div class="sub-heading"> 
+                    As of now, we have results for the 8 states in blue. 
+</div>
+                <div class="row screenshots">
+                    <div class="col-md-12">
+                        <div id="map" style="height: 600px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>                         
+                    </div>
+                </div>                 
+                <!-- SCREENSHOTS -->                 
+                <!-- /END SCREENSHOTS -->                 
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>
+        <section class="section6 bgcolor-2" id="rSum"> 
+            <div class="container"> 
+                <!-- SECTION HEADING -->                 
+                <h2><h2>Summary</h2></h2> 
+                <div class="colored-line"> 
+</div>                 
+                <div class="sub-heading"> 
+                    Takeaways
+</div>                 
+                <!-- SCREENSHOTS -->                 
+                <div class="row screenshots">
+                    <div class="col-md-10 col-md-offset-1 leftAlign"> 
+                        <p>A partisan legislature was in charge of redistricting in five of the eight states we have studied so far. In each case, nearly every district that had the potential to be competitive went to the party in control of the legislature. The party in power achieved this by packing the opposing party's voters into as few districts as possible. </p>
+                        <p>We've only studied one legislature so far where each chamber was controlled by a different party at the time of redistricting (New York). The victory margins in most potentially competitive districts were pretty much at the medians from our samples, but many of the remaining districts were nowhere near close to the medians. </p>
+                        <p>The independant commissions in Iowa and Arizona appear to be doing a better job than most, although Arizona's safest districts are much safer than our sample medians. Our samples for Iowa failed to divide the population well because no counties were split, nevertheless the victory margins were close to sample medians. </p>
+                        <p>Majority-minority districts are demonstrably hurting Democrats in North Carolina and Maryland as they concentrate minorities into a few districts, diluting the voting power of Democratic voters within the state. </p>
+                        <p>It would be remiss to not emphasize that even though gerrymandering does affect outcomes and competitiveness of congressional races, it is not the primary source of polarization in the U.S. Congress. The urban-rural divide in the American electorate means that in most states, there can only be a handful of districts that can have the potential to be competitive, regardless of how the (contiguous) districts are drawn. Most districts will naturally be "safe" victories. Gerrymandering primarily occurs to maximize the number of potentially competitive districts that go to the party that is in power during redistricting.</p>
+                    </div>                     
+                </div>                 
+                <!-- /END SCREENSHOTS -->                 
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>         
+        <!-- =========================
+     SECTION 7  
+============================== -->         
+        <section class="section7 bgcolor-" id="section7"> 
+            <div class="container"> 
+                <!-- SECTION HEADING -->                 
+                <h2>Team</h2> 
+                <div class="colored-line"> 
+</div>                 
+                <!-- CLIENTS -->                 
+                <div class="row clients"> 
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-4"> 
+                                <div class="single-feedback"> 
+                                    <div class="client-pic"> 
+                                        <img src="CV.png" alt="">                                         
+                                    </div>                                     
+                                    <div class="client-info"> 
+                                        <div class="client-name colored-text strong"> 
+                                            Christy Vaughn
+</div>                                         
+                                        <div class="company"> 
+                                            Trinity 2015
+</div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4"> 
+                                <div class="single-feedback"> 
+                                    <div class="client-pic"> 
+                                        <img src="SB.jpg" alt="">                                         
+                                    </div>                                     
+                                    <div class="client-info"> 
+                                        <div class="client-name colored-text strong"> 
+                                            Sachet Bangia
+</div>                                         
+                                        <div class="company"> 
+                                            Trinity 2017
+</div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4"> 
+                                <div class="single-feedback"> 
+                                    <div class="client-pic"> 
+                                        <img src="BD.png" alt="">                                         
+                                    </div>                                     
+                                    <div class="client-info"> 
+                                        <div class="client-name colored-text strong"> 
+                                            Bridget Dou
+</div>                                         
+                                        <div class="company"> 
+                                            Pratt 2017
+</div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>
+                            <div class="col-lg-2 col-lg-offset-0 col-md-2 col-md-offset-0 col-sm-offset-2 col-sm-4"> 
+                                <div class="single-feedback"> 
+                                    <div class="client-pic"> 
+                                        <img src="SG.png" alt="">                                         
+                                    </div>                                     
+                                    <div class="client-info"> 
+                                        <div class="client-name colored-text strong"> 
+                                            Sophie Guo
+</div>                                         
+                                        <div class="company"> 
+                                            Trinity 2015
+</div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>
+                            <div class="col-lg-2 col-lg-offset-0 col-md-2 col-sm-4"> 
+                                <div class="single-feedback"> 
+                                    <div class="client-pic"> 
+                                        <img src="JCM.png" alt="">                                         
+                                    </div>                                     
+                                    <div class="client-info"> 
+                                        <div class="client-name colored-text strong"> 
+                                            Jonathan Mattingly
+</div>                                         
+                                        <div class="company"> 
+                                            Faculty Advisor (Mathematics)
+</div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>
+                        </div>                         
+                    </div>                     
+                </div>                 
+                <!-- TESTIMONIALS -->                 
+                <div class="row testimonials"> 
+                    <!-- FEEDBACKS -->                     
+                </div>                 
+                <!-- /END TESTIMONIALS -->                 
+            </div>             
+            <!-- /END CONTAINER -->             
+        </section>         
+        <!-- =========================
+     SECTION 8 - CTA  
+============================== -->         
+        <section class="cta-section" id="section8"> 
+            <div class="color-overlay"> 
+                <div class="container"> 
+                    <h4>You can reach us at</h4> 
+                    <h2>sachet.bangia@duke.edu<br>jonm@math.duke.edu</h2><br><br>
+					<h2>More information on the groups 
+					recent work can be found on
+					the <a
+					href="https://sites.duke.edu/quantifyinggerrymandering/">Quantifying
+					Gerrymandering</a> website.</h2> 
+                </div>                 
+                <!-- /END CONTAINER -->                 
+            </div>             
+            <!-- /END COLOR OVERLAY -->             
+        </section>         
+        <!-- =========================
+     SECTION 9 - CONTACT US  
+============================== -->         
+        <section class="contact-us" id="section9"> 
+            <div class="container"> 
+                <div class="row"> 
+</div>                 
+            </div>             
+        </section>         
+        <!-- =========================
+     SECTION 10 - FOOTER 
+============================== -->         
+        <!-- =========================
+     SCRIPTS   
+============================== -->         
+        <script src="js/jquery.min.js"></script>         
+        <script>
+/* =================================
+   LOADER                     
+=================================== */
+// makes sure the whole site is loaded
+jQuery(window).load(function() {
+	"use strict";
+        // will first fade out the loading animation
+	jQuery(".status").fadeOut();
+        // will fade out the whole DIV that covers the website.
+	jQuery(".preloader").delay(1000).fadeOut("slow");
+})
+
+</script>         
+        <script src="js/bootstrap.min.js"></script>         
+        <script src="js/retina-1.1.0.min.js"></script>         
+        <script src="js/smoothscroll.js"></script>         
+        <script src="js/jquery.scrollTo.min.js"></script>         
+        <script src="js/jquery.localScroll.min.js"></script>         
+        <script src="js/owl.carousel.min.js"></script>         
+        <script src="js/nivo-lightbox.min.js"></script>         
+        <script src="js/simple-expand.min.js"></script>         
+        <script src="js/jquery.nav.js"></script>         
+        <script src="js/jquery.fitvids.js"></script>         
+        <script src="js/jquery.ajaxchimp.min.js"></script>         
+        <script src="js/custom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="js/process.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+        <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+        <script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+        <script src="js/map.js"></script>
+        <!-- ****************
+      After neccessary customization/modification, Please minify JavaScript/jQuery according to http://browserdiet.com/en/ for better performance
+     **************** -->
+    </body>
+</html>
