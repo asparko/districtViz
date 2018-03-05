@@ -19,11 +19,12 @@ function makeDistNodeGroups(dist) {
 			nodeGroups[distNum] = [nodeIdx];
 		}
 	});
-	console.log(JSON.stringify(nodeGroups));
+	//console.log("Node groups:")
+	//console.log(JSON.stringify(nodeGroups));
 	return nodeGroups;
 }
 
-makeDistNodeGroups(dist);
+var nodeGroups = makeDistNodeGroups(dist);
 
 function makeAdjacenyList(edges) {
 	adjList = {};
@@ -47,8 +48,22 @@ function makeAdjacenyList(edges) {
 		}
 
 	});
-	console.log(JSON.stringify(adjList));
+	//console.log("Adjacency List:")
+	//console.log(JSON.stringify(adjList));
 	return adjList;
 }
 
 var adjList = makeAdjacenyList(edges);
+
+
+
+
+
+
+
+
+
+
+
+
+

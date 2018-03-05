@@ -21,26 +21,6 @@ var yScale = d3.scale.linear()
 	.range([h - padding, padding]);//change for others
 
 
-/*var l = svg.append("line")
-	.attr("x1", xScale(coords[6][0]))
-	.attr("y1", yScale(coords[6][1]))
-	.attr("x2", xScale(coords[14][0]))
-	.attr("y2", yScale(coords[14][1]))
-	.attr("stroke", "white")
-	.attr("stroke-width", 3)
-	.attr("stroke-dasharray", 1);
-
-var l2 = svg.append("line")
-.	attr("x1", xScale(coords[52][0]))
-.attr("y1", yScale(coords[52][1]))
-.attr("x2", xScale(coords[10][0]))
-.attr("y2", yScale(coords[10][1]))
-.attr("stroke", "white")
-.attr("stroke-width", 3)
-.attr("stroke-dasharray", 1);
-*/
-
-
 //MAKE THE EDGES
 var lines = svg.selectAll("line")
 	.data(edges)
@@ -100,6 +80,22 @@ function pickConflicted(conflictedIndices){
 	return conflictedIndices[rand];
 }
 
+function removeConflictedEdges(conflictedIndices){
+	//Makes a different adjacency list which excludes conflicted edges
+	//So we have four disconnected subgraphs.
+
+	//Deep copy full adjList
+	var districtEdges = edges.slice(0);
+
+	for (var i = conflictedIndices.length - 1; i >= 0; i--) {
+		districtEdges.splice(conflictedIndices[i],1);		
+	};
+
+	//Make new adjList
+	var districtAdjList = makeAdjacenyList(districtEdges);
+	return districtAdjList;
+}
+
 // Breadth First Search using adjacency list
 function bfs(v, adjlist, visited) {
   var q = [];
@@ -124,10 +120,27 @@ function bfs(v, adjlist, visited) {
   return current_group;
 };
 
-//function 
+function checkConnedtedSize(distAdjList){
+	var groups = [];
+	var groupSizes = [];
+	var visited = {};
+	var v;
+
+	for (v in distAdjList) {
+	  if (distAdjList.hasOwnProperty(v) && !visited[v]) {
+	    groups.push(bfs(v, distAdjList, visited));
+	  }
+	}
+
+	for (var i = groups.length - 1; i >= 0; i--) {
+		groupSizes[i]=groups[i].length;
+	};
+	return groupSizes;
+
+}
 
 function colorEdgesBeforeSwitch(selectedConflict){
-	lines.attr("stroke", "lightgray");
+	lines.transition().duration(500).attr("stroke", "lightgray");
 	d3.selectAll(".conflicted")
 		.transition()
 			.duration(1500)
@@ -156,6 +169,7 @@ function colorEdgesAfterSwitch(){
 			.duration(1500)
 			.attr("stroke", "lightgray")
 			.attr("stroke-width", 2);
+
 }
 
 function colorCircles(){
@@ -168,7 +182,7 @@ function colorCircles(){
 			});	
 }
 
-$("#play").click(function(){
+function playOneRound(){
 	totalDuration = 0;
 
 	var conflictedIndices = [];
@@ -177,111 +191,53 @@ $("#play").click(function(){
 
 	colorEdgesBeforeSwitch(selectedConflict);
 
-	//Choose one of the nodes to switch to other district
-	var rand = Math.floor(Math.random()*2);
-	var nodePair = d3.select(lines[0][selectedConflict]).datum();
+	var testPotentialSwitch = true;
 
-	var nodeIndices = [nodePair[0]-1, nodePair[1]-1];
-	var switchingNodeIdx = nodeIndices[rand];
-	var stayingNodeIdx = nodeIndices[(rand+1)%2];
+	while(testPotentialSwitch){
+		testPotentialSwitch = false;
+		//Choose one of the nodes to switch to other district
+		var rand = Math.floor(Math.random()*2);
+		var nodePair = d3.select(lines[0][selectedConflict]).datum();
 
-	//Check to ensure switching the selected node won't create disconnected districts
-	var groups = [];
-	var visited = {};
-	var v;
+		var nodeIndices = [nodePair[0]-1, nodePair[1]-1];
+		var switchingNodeIdx = nodeIndices[rand];
+		var stayingNodeIdx = nodeIndices[(rand+1)%2];
 
-	for (v in adjList) {
-	  if (adjList.hasOwnProperty(v) && !visited[v]) {
-	    groups.push(bfs(v, adjList, visited));
-	  }
-	}
+		//Check to ensure switching the selected node won't create disconnected districts
+		var prevDistrict = dist[switchingNodeIdx];
+		var distAdjList = removeConflictedEdges(conflictedIndices);
+		//Get group sizes before switch
+		var prevGroups = checkConnedtedSize(distAdjList);
+		console.log("prev group sizes: ", prevGroups);
+		//Get group sizes after switch
+		dist[switchingNodeIdx] = dist[stayingNodeIdx];
+		var putativeConflicts = findConflicted();
+		var putativeDistAdjList = removeConflictedEdges(putativeConflicts);
+		var putativeGroups = checkConnedtedSize(putativeDistAdjList);
+		console.log("putative group sizes: ", putativeGroups);
 
-	console.log(groups);
+		//If any group size changes by more than 1, undo dist change and keep trying! 
+		for (var i = prevGroups.length - 1; i >= 0; i--) {
+			if (Math.abs(prevGroups[i] - putativeGroups[i]) > 1){
+				console.log('continuing');
+				dist[switchingNodeIdx] = prevDistrict;
+				testPotentialSwitch = true;
+				continue;
+			} 
+		}
+	};
 
-	dist[switchingNodeIdx] = dist[stayingNodeIdx];
+	
 	//Now, recolor circles to reflect new districting
 	colorCircles();
-	/*
-	circles
-		.transition()
-			.duration(1500)
-			.attr("fill", function(d,i){
-				return colors[dist[i]-1];
-			});
-	endall();		
-	*/
-	//And, recolor edges to reflect new district divisions
-	
+
+	//And, recolor edges to reflect new district divisions	
 	var conflictedIndices = [];
 	conflictedIndices = findConflicted();
 	colorEdgesAfterSwitch();
+};
+
+
+$("#play").click(function(){
+	playOneRound();
 });
-	/*
-	d3.selectAll(".conflicted")
-		.transition()
-			.duration(500)
-			.attr("stroke", "white");
-	d3.selectAll(".notConflicted")
-		.transition()
-			.duration(500)
-			.attr("stroke", "lightgray");
-	*/
-
-
-$("#pause").click(function(){
-	paused = true;
-});
-
-////remove this later:
-//svg.selectAll("text")
-//.data(coords)
-//.enter()
-//.append("text")
-//.text(function(d, i) {
-//      return i;
-//      })
-//.attr("x", function(d) {
-//      return xScale(d[0])-3;
-//      })
-//.attr("y", function(d) {
-//      return yScale(d[1])+3;
-//      })
-//.attr("font-size", "9px");
-
-
-
-var myVar;
-var step = 0;
-var clicker = 0;
-var steps = 9;
-
-
-function myTimer(){
-    dist[stepRecord[step][0]-1] = stepRecord[step][1];
-    step += 1;
-    if (step>stepRecord.length){
-        window.clearInterval(myVar);
-        step=0;
-        return;
-    }
-    circles.attr("fill", function(d, i){ return colors[dist[i]-1]; })//-1 because districting is 1 indexed);
-    
-    lines.attr("stroke", function(d){
-               if (dist[d[0]-1]!=dist[d[1]-1]){ return "white";//-1 because edges are 1 indexed
-               }else{ return colors[dist[d[0]-1]-1];}})
-        .attr("stroke-width", function(d){
-          if (dist[d[0]-1]!=dist[d[1]-1]){ return 0;//-1 because edges are 1 indexed
-          }else{ return 2;
-          }})
-;
-}
-
-
-function update(){
-    
-
-    
-}
-
-
-;
