@@ -48,15 +48,6 @@ circles.attr("cx", function(d) {return xScale(d[0]);})
 		return colors[dist[i]-1]; 
 	});
 
-//A helper function i found on the interwebs to check if all previous transitions are complete.
-function endall(transition, callback) { 
-	if (transition.size() === 0) { callback() }
-	var n = 0; 
-	transition 
-    	.each(function() { ++n; }) 
-    	.each("end", function() { if (!--n) callback.apply(this, arguments); }); 
-}
-
 
 function findConflicted(){
 	var conflictedIndices = [];
@@ -158,6 +149,7 @@ function colorEdgesBeforeSwitch(selectedConflict){
 }
 
 function colorEdgesAfterSwitch(){
+	var transitions = 0;
 	d3.selectAll(".conflicted")
 		.transition()
 			.delay(4500)
@@ -165,12 +157,23 @@ function colorEdgesAfterSwitch(){
 			.attr("stroke", "white");
 	d3.selectAll(".notConflicted")
 		.transition()
+			.each(function() { transitions++; }) 
 			.delay(4500)
 			.duration(1500)
 			.attr("stroke", "lightgray")
-			.attr("stroke-width", 2);
+			.attr("stroke-width", 2)
+			.each("end", function() {
+				if( --transitions === 0 ) {
+					callbackWhenAllIsDone();
+				};
+	        });
+			//.on("end", function() { next(keyIndex+1) }); 
+			//.on("end", function(){ hello(); });
 
 }
+
+
+
 
 function colorCircles(){
 	circles
@@ -183,6 +186,7 @@ function colorCircles(){
 }
 
 function playOneRound(){
+	console.log("Playing round one.")
 	totalDuration = 0;
 
 	var conflictedIndices = [];
@@ -241,3 +245,12 @@ function playOneRound(){
 $("#play").click(function(){
 	playOneRound();
 });
+
+$("#pause").click(function(){
+	lines.transition();
+});
+
+function callbackWhenAllIsDone(){
+	console.log("calling back on done.");
+	$( "#play" ).trigger( "click" );
+}
