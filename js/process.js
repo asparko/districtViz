@@ -44,6 +44,7 @@ var circles = svg.selectAll("circle")
 circles.attr("cx", function(d) {return xScale(d[0]);})
 	.attr("cy", function(d){return yScale(d[1]);})
 	.attr("r", 8)
+	.attr("stroke-width", 0)
 	.attr("fill", function(d, i){ 
 		return colors[dist[i]-1]; 
 	});
@@ -131,37 +132,61 @@ function checkConnedtedSize(distAdjList){
 }
 
 function colorEdgesBeforeSwitch(selectedConflict){
-	lines.transition().duration(500).attr("stroke", "lightgray");
+	lines.transition()
+		.duration(500)
+		.attr("stroke", "black")
+		.attr("stroke-width", 3);
 	d3.selectAll(".conflicted")
 		.transition()
 			.duration(1500)
-			.attr("stroke", "black")
-			.attr("stroke-width", 3)
-		.transition()
+			.attr("stroke", "lightgray")
+			.attr("stroke-width", 2);
+		/*.transition()
 			.duration(1500)
 			.delay(2000)
-			.attr("stroke", "white");
+			.attr("stroke", "white");*/
+	console.log("Selected conflict:");
+	var conflictedNodeIndices = edges[selectedConflict];
+	var conflictNode1 = circles[0][conflictedNodeIndices[0]-1];
+	var conflictNode2 = circles[0][conflictedNodeIndices[1]-1];
+
+	//Highlight selected conflict edge
 	d3.select(lines[0][selectedConflict])
 		.transition()
 			.duration(1500)
 			.delay(2000)
-			.attr("stroke", "black");	
+			.attr("stroke", "black")
+			.attr("stroke-width", 5);
+
+	//Highlight selected conflicted nodes
+	d3.selectAll([conflictNode1, conflictNode2])
+		.transition()
+			.duration(1500)
+			.delay(2000)
+			.attr("stroke", "black")
+			.attr("stroke-width", 4);
 }
 
 function colorEdgesAfterSwitch(){
 	var transitions = 0;
+	circles
+		.transition()
+			.delay(4500)
+			.duration(1500)
+			.attr("stroke-width", 0);
 	d3.selectAll(".conflicted")
 		.transition()
 			.delay(4500)
 			.duration(1500)
-			.attr("stroke", "white");
+			.attr("stroke", "lightgray")
+			.attr("stroke-width", 2);
 	d3.selectAll(".notConflicted")
 		.transition()
 			.each(function() { transitions++; }) 
 			.delay(4500)
 			.duration(1500)
-			.attr("stroke", "lightgray")
-			.attr("stroke-width", 2)
+			.attr("stroke", "black")
+			.attr("stroke-width", 3)
 			.each("end", function() {
 				if( --transitions === 0 ) {
 					callbackWhenAllIsDone();
@@ -187,7 +212,6 @@ function colorCircles(){
 
 function playOneRound(){
 	console.log("Playing round one.")
-	totalDuration = 0;
 
 	var conflictedIndices = [];
 	conflictedIndices = findConflicted();
@@ -243,6 +267,10 @@ function playOneRound(){
 
 
 $("#play").click(function(){
+	playOneRound();
+});
+
+$("#fast").click(function(){
 	playOneRound();
 });
 

@@ -16,9 +16,41 @@ body {
 
 svg {
   width: 75%;
-  height: 75%;
-  display: block;
+  height: 95%;
   margin: auto;
+
+}
+
+.panel {
+	flex-grow: 1;
+	background-color: white;
+	border: 1px solid black;
+}
+
+.containerGraph{
+    display: flex;
+    height: 80%;
+    padding: 20px;
+}
+.containerControls{
+    display: flex;
+    height: 10%;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.button {
+    background-color: white; /* Green */
+    border: none;
+    color: black;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    min-width: 100px;
+    /*display: inline-block;*/
+    font-size: 16px;
+    cursor: pointer;
 }
 
 
@@ -29,21 +61,16 @@ svg {
 	<!--script src="https://d3js.org/d3.v4.js"></script-->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="js/graphData.js"></script>
-	<script>
-	var width = self.frameElement ? 960 : innerWidth,
-    	height = self.frameElement ? 500 : innerHeight;
 
-	var data = d3.range(20).map(function() { return [Math.random() * width, Math.random() * height]; });
 
-	var color = d3.scale.category10();
-
-	</script>
-
-	<div style="text-align:center; height:100%;">
+	<div class="containerGraph">
 		<svg id="graph"></svg>
-		<p id="play">PLAY</p>
-		<p id="pause">PAUSE</p>
-
+		<div class="panel"></div>
+	</div>
+	<div class="containerControls">
+		<button class="button" id="play">SLOW</button>
+		<button class="button" id="fast">FAST</button>
+		<button class="button" id="pause">PAUSE</button>
 	</div>
 </body>
 
